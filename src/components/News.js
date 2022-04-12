@@ -7,12 +7,12 @@ import PropTypes from 'prop-types'
 export default class News extends Component {
 
     static defaultProps={
-        country:"in",
-        pageSize:8,
-        category:'general',
+        country:'in',
+        pageSize: 8,
+        category: 'general',
     }
     static propTypes={
-        country: this.propTypes.string,
+        country: PropTypes.string,
         pageSize: PropTypes.number,
         category: PropTypes.string,
     }
@@ -26,7 +26,7 @@ export default class News extends Component {
     }
     // Using API to display the details 
     async componentDidMount() {                  //Lifecycle method - will run after tthe render method runs
-        let url = `https://newsapi.org/v2/top-headlines?country=incategory=${this.props.category}&apiKey=3de19515e2754ab2a37d08aa6d304d7e&page=1&pageSize=${this.props.pageSize}`;
+        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=3de19515e2754ab2a37d08aa6d304d7e&page=1&pageSize=${this.props.pageSize}`;
         this.setState({loading:true});
         let data = await fetch(url);   // returns promise
         let parsedData = await data.json();
@@ -34,7 +34,7 @@ export default class News extends Component {
         this.setState({ articles: parsedData.articles, totatResults: parsedData.totatResults,loading:false })
     }
     handleprevClick = async () => {
-        let url = `https://newsapi.org/v2/top-headlines?country=incategory=${this.props.category}&apiKey=3de19515e2754ab2a37d08aa6d304d7e&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`;
+        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=3de19515e2754ab2a37d08aa6d304d7e&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`;
         this.setState({loading:true});
         let data = await fetch(url);   // returns promise
         let parsedData = await data.json();
@@ -48,7 +48,7 @@ export default class News extends Component {
     }
     handlenextClick = async () => {
         if (!(this.state.page + 1 > Math.ceil(this.state.totatResults/ this.props.pageSize))) {
-            let url = `https://newsapi.org/v2/top-headlines?country=incategory=${this.props.category}&apiKey=3de19515e2754ab2a37d08aa6d304d7e&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
+            let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=3de19515e2754ab2a37d08aa6d304d7e&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
             this.setState({loading:true});
             let data = await fetch(url);   // returns promise
             let parsedData = await data.json();
